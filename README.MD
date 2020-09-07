@@ -1,0 +1,2 @@
+# The fastest hand in the wild west.
+This project used the Arduino Uno microcircuit. She controls an LCD screen, breadboard with two buttons, four lights (2 for each button) and another one light, serving as a referee.

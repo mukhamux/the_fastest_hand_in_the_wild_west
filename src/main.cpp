@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include <LiquidCrystal_I2C.h>
-#include <stdlib.h>
 #include <stdio.h>
 
 #define REFEREE_PIN   12
@@ -14,8 +13,8 @@ unsigned int wins[PLAYER_COUNT] = {0, 0};
 unsigned int fouls[PLAYER_COUNT] = {0, 0};
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
-char* first_line_lcd;
-char* second_line_lcd;
+char first_line_lcd[17];
+char second_line_lcd[17];
 
 void print_reaction(unsigned long pressed_time, unsigned long current_time) {
     lcd.clear();
@@ -92,15 +91,8 @@ void setup() {
     }
 }
 
-void clear_memory() {
-    free(first_line_lcd);
-    free(second_line_lcd);
-}
 
 void loop() {
-    first_line_lcd = (char*)calloc(16, sizeof(char));
-    second_line_lcd = (char*)calloc(16, sizeof(char));
-
     unsigned long start_game_time = millis();
     unsigned long interval = random(1000, 3000); // random interval which referee (light in my case) waiting before give signal
     unsigned long current_time = millis();
@@ -119,7 +111,6 @@ void loop() {
                 check_win(!player);
 
                 digitalWrite(errorPins[player], LOW);
-                clear_memory();
                 return;
             }
         }
